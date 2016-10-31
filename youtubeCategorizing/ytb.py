@@ -11,16 +11,20 @@ from apiclient.discovery import build
 from apiclient.errors import HttpError
 from oauth2client.tools import argparser
 
+videos_caracteristics = []
+videos_ids = []
 
 key = open('key_yt.config', 'r').read().replace('\n', '')
+search_topic = "top"
 r = requests.get(
-    "https://www.googleapis.com/youtube/v3/search?part=id&q=League&type=video&maxResults=50&key=" + key)
+    "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + search_topic + "&type=video&maxResults=50&key=" + key)
 
-data = json.loads(r.text)
+r.text.replace('\n', '')
+data = json.loads(r.text.replace('\n', ''))
 
 np.arange(len(data['items']))
 data = json.loads(r.text)
-data
+
 videos_ids = list(map(lambda x: data['items'][x]['id'][
                   'videoId'], np.arange(len(data['items']))))
 
